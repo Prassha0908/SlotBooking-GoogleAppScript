@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Form</title>
+    <style>
+         body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f4f4f4;
+            flex-direction: column;
+            margin: 18px 0;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 350px;
+            position: relative;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        select, button {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+        }
+        button {
+            margin-top: 5%;
+            border: none;
+            border-radius: 60px;
+            background-color: #04AA6D;
+        }
+        .warning {
+            color: red;
+            margin-top: 10px;
+            font-weight: bold;
+            min-height: 20px;
+        }
+        .header {
+            background-color: black;
+            height: 50px;
+            font-size: 14px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 0 20px;
+        }
+        .header a {
+            color: white;
+            text-decoration: none;
+        }
+        .title {
+            text-align: center;
+            color: rgb(142, 177, 35);
+            text-transform: uppercase;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div>
+            📞<a href="tel:91 1234567890">+91 1234567890</a> | 💬 <a>+91 1234567890</a>
+        </div>
+        <div>
+            <a href="https://github.com/Prassha0908"> Rera: TOR/PRM/KA/RERA/1251/310/PR/230120/001682 </a>
+        </div>
+    </div>
+
+    <h1 class="title">Acceptance of Inspection at the Time of Possession</h1>
+
+
+    <div class="container">
+        <h2 style="text-align:center">Book your Slot</h2>
+        <label for="flat">Flat Number:</label>
+        <select id="flat" onchange="clearWarning()">
+            <option value="" disabled selected>Select a flat</option>
+            <option value="101">101</option>
+            <option value="102">102</option>
+            <option value="103">103</option>
+            <option value="104">104</option>
+            <option value="105">105</option>
+            <option value="106">106</option>
+            <option value="107">107</option>
+            <option value="108">108</option>
+            <option value="109">109</option>
+            <option value="110">110</option>
+            <option value="111">111</option>
+        </select>
+        
+        <label for="day">Select Day:</label>
+        <select id="day" onchange="clearWarning()">
+            <option value="" disabled selected>Select a day</option>
+            <option value="Saturday">Saturday</option>
+            <option value="Sunday">Sunday</option>
+        </select>
+
+        <label for="project">Project Name:</label>
+        <select id="project" onchange="clearWarning()">
+            <option value="" disabled selected>Select a project</option>
+            <option value="Project A">Project A</option>
+            <option value="Project B">Project B</option>
+        </select>
+
+        <label for="timeSlot">Select Time Slot:</label>
+        <select id="timeSlot" onchange="clearWarning()">
+            <option value="" disabled selected>Select a time slot</option>
+        </select>
+
+        <button onclick="bookSlot()"><b>Book</b></button>
+        <p class="warning" id="warning"></p>
+    </div>
+
+    <script>
+        let slotsBooked = 0;
+        let bookedFlats = {};
+        
+        let timeSlots = [
+            { start: "10:30 AM", end: "10:50 AM" },
+            { start: "11:00 AM", end: "11:20 AM" },
+            { start: "11:30 AM", end: "11:50 AM" },
+            { start: "12:00 PM", end: "12:20 PM" },
+            { start: "12:30 PM", end: "12:50 PM" },
+            { start: "1:00 PM", end: "1:20 PM" },
+            { start: "1:30 PM", end: "1:50 PM" },
+            { start: "2:00 PM", end: "2:20 PM" },
+            { start: "2:30 PM", end: "2:50 PM" },
+            { start: "3:00 PM", end: "3:20 PM" },
+            { start: "3:30 PM", end: "3:50 PM" },
+            { start: "4:00 PM", end: "4:20 PM" },
+            { start: "4:30 PM", end: "4:50 PM" },
+            { start: "5:00 PM", end: "5:20 PM" },
+            { start: "5:30 PM", end: "5:50 PM" }
+        ];
+
+        function populateTimeSlots() {
+            let timeSlotSelect = document.getElementById("timeSlot");
+            timeSlots.forEach(slot => {
+                let option = document.createElement("option");
+                option.value = slot.start + " - " + slot.end;
+                option.textContent = slot.start + " - " + slot.end;
+                timeSlotSelect.appendChild(option);
+            });
+        }
+        window.onload = populateTimeSlots;
+
+        function clearWarning() {
+            document.getElementById("warning").innerText = "";
+        }
+
+        function getCurrentTime() {
+            return new Date();
+        }
+
+        function isBookingTimeValid() {
+            let now = getCurrentTime();
+            let hours = now.getHours();
+            let minutes = now.getMinutes();
+            let slotMinutes = minutes % 30;
+            return hours >= 10 && hours < 18 && slotMinutes >= 0 && slotMinutes < 20;
+        }
+
+        function bookSlot() {
+            let warning = document.getElementById("warning");
+            let flatElement = document.getElementById("flat");
+            let dayElement = document.getElementById("day");
+            let projectElement = document.getElementById("project");
+            let timeSlotElement = document.getElementById("timeSlot");
+
+            if (!flatElement || !dayElement || !projectElement || !timeSlotElement) {
+                console.error("One or more elements are missing.");
+                return;
+            }
+
+            let flat = flatElement.value;
+            let day = dayElement.value;
+            let project = projectElement.value;
+            let timeSlot = timeSlotElement.value;
+
+            if (!flat || !day || !project || !timeSlot) {
+                warning.innerText = "⚠ Please fill all fields before booking.";
+                return;
+            }
+
+            let now = getCurrentTime();
+            let hours = now.getHours();
+
+            if (hours < 10) {
+                warning.innerText = "⚠ Booking starts from 10 AM.";
+                return;
+            }
+
+            if (hours >= 18 && day === "Saturday") {
+                warning.innerText = "⚠ Booking closed for today. Please book on Sunday.";
+                return;
+            }
+
+            if (hours >= 18 && day === "Sunday") {
+                warning.innerText = "⚠ Booking closed for this week. You can try again next weekend.";
+                return;
+            }
+
+            let projectKey = project + "-" + flat;
+            if (bookedFlats[projectKey]) {
+                warning.innerText = "⚠ This flat has already been booked under this project.";
+                return;
+            }
+
+            if (isBookingTimeValid()) {
+                if (slotsBooked <= 10) {
+                    slotsBooked++;
+                    bookedFlats[projectKey] = true;
+                    alert("Slot booked successfully!");
+                } else {
+                    warning.innerText = "⚠ Booking limit reached! Try the next slot.";
+                }
+            } else {
+                warning.innerText = "⚠ Time for this slot has ended. Try the next one.";
+            }
+
+            let bookingData = {
+                flat: flat,
+                day: day,
+                project: project,
+                timeSlot: timeSlot,
+                date: new Date().toDateString()
+            };
+
+            google.script.run
+                .withSuccessHandler(response => {
+                    if (response.success) {
+                        // alert("Slot booked successfully!");
+                    } else {
+                        warning.innerText = response.message;
+                    }
+                })
+                .bookSlot(bookingData);
+        }
+    </script>
+</body>
+</html>
