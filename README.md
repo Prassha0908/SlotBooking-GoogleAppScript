@@ -18,10 +18,9 @@ This project is a **Slot Booking System** developed using **Google Apps Script**
 2. [Technology Stack](#technology-stack)  
 3. [Setup Instructions](#setup-instructions)  
 4. [How It Works](#how-it-works)  
-5. [Google Apps Script Functionality](#google-apps-script-functionality)  
-6. [Usage](#usage)  
-7. [Contact](#contact)  
-8. [License](#license)  
+5. [Usage](#usage)  
+6. [Contact](#contact)  
+7. [License](#license)  
 
 
 ## ✨ Features  
