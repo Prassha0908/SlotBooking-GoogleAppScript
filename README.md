@@ -14,13 +14,13 @@ This project is a **Slot Booking System** developed using **Google Apps Script**
 
 
 ## Table of Contents  
-1. [Features](#features)  
-2. [Technology Stack](#technology-stack)  
-3. [Setup Instructions](#setup-instructions)  
-4. [How It Works](#how-it-works)  
-5. [Usage](#usage)  
-6. [Contact](#contact)  
-7. [License](#license)  
+1. Features
+2. Technology Stack  
+3. Setup Instructions 
+4. How It Works  
+5. Usage  
+6. Contact  
+7. License  
 
 
 ## ✨ Features  
